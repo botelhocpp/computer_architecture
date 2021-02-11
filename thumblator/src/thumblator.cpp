@@ -121,6 +121,5 @@ string decodeInstructions(int numeric_opcode, int line_number){
         opcode.clear();
         return opcode;
     }
-    opcode += '\n';
     return opcode;
 }
