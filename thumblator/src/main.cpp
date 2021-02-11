@@ -35,6 +35,9 @@ int main(int argc, char* argv[]){
         short line_number = 0;
         long int numeric_opcode = 0;
         string opcode;
+        while(source_code.find(' ') != source_code.npos){
+            source_code.erase(source_code.find(' '), 1);
+        }
         while(step < source_code.size()){
             while(source_code[step] != '\n'){
                 opcode += source_code[step++];
@@ -45,10 +48,8 @@ int main(int argc, char* argv[]){
             numeric_opcode = strtol(opcode.c_str(), NULL, 16);
             opcode = decodeInstructions(numeric_opcode, ++line_number);
             if(opcode.empty()) return 0;
-            source_code.replace(step, 1, ":  ");
-            step += 2;
-            source_code.replace(step, 1, opcode);
-            step += opcode.size();
+            source_code.replace(step, 1, ":  " + opcode + "\n");
+            step += opcode.size() + 4;
             opcode.clear();
         }
 
