@@ -12,6 +12,7 @@
 @ License:        GNU General Public License v3.0
 @-------------------------------------------------------------------
 
+
 .IFNDEF COPYCAT_LIB
 .EQU    COPYCAT_LIB, 0
 
@@ -61,11 +62,21 @@
 
 
 @-------------------------------------------------------------------
+.GLOBAL _fileToString
+@ Description: Copies data from a file to memory
+@ Receives:    The string address, where the data will be placed, and
+@              the input file descriptor, in r0.
+@ Returns:     The data in the requested string, in memory.
+@-------------------------------------------------------------------
+
+
+@-------------------------------------------------------------------
 .GLOBAL _printString 
 @ Description: Print a message in the terminal.
 @ Receives:    The string address in r1.
 @ Returns:     Nothing.
 @-------------------------------------------------------------------
+
 
 @-------------------------------------------------------------------
 .GLOBAL _fileError 
@@ -73,6 +84,7 @@
 @ Receives:    Nothing.
 @ Returns:     Nothing.
 @-------------------------------------------------------------------
+
 
 @Constants
 .EQU EXIT_FUNCTION,    0x0001
