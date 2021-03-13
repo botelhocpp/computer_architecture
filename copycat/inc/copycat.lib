@@ -17,14 +17,6 @@
 
 
 @-------------------------------------------------------------------
-.GLOBAL _end
-@ Description: Restore stack pointer to default position and exit.
-@ Receives:    Nothing.
-@ Returns:     Nothing.
-@-------------------------------------------------------------------
-
-
-@-------------------------------------------------------------------
 .GLOBAL _getInput 
 @ Description: Get user input from keyboard.
 @ Receives:    Memory address where the string must be placed.
