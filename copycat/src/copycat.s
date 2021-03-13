@@ -12,10 +12,12 @@
 @ License:        GNU General Public License v3.0
 @-------------------------------------------------------------------
 
+
 .TEXT
 
 .ARM
 .INCLUDE "copycat.lib"
+
 
 @-------------------------------------------------------------------
 _end:
@@ -30,9 +32,10 @@ _end:
 	MOV r7, #EXIT_FUNCTION
 	SWI #0
 
+
 @-------------------------------------------------------------------
 _getInput:
-@ Description: Get user input from keyboard.
+@ Description: Get user's input from keyboard.
 @ Receives:    Memory address where the string must be placed.
 @ Returns:     The string in the desired address.
 @-------------------------------------------------------------------
@@ -55,7 +58,7 @@ _getInput:
 
 @-------------------------------------------------------------------
 _openFile:
-@ Description: Open the desired file.
+@ Description: Opens the desired file.
 @ Receives:    The file path/name in r0, flags in r1, and permissions
 @              in r2. Also the address where the FD will me saved in
 @              r5. Some explanations:
@@ -113,10 +116,27 @@ _copyFile:
 		SWI #0	
 		B _readFile
 
+@-------------------------------------------------------------------
+_fileToString:
+@ Description: Copies data from a file to memory
+@ Receives:    The string address, where the data will be placed, in 
+@              r1, and the input file descriptor, in r8.
+@ Returns:     The data in the requested string, in memory.
+@-------------------------------------------------------------------
+	PUSH {LR}
+	MOV r2, #OPERATE_ONE_BYTE
+	__inner_fileToString:
+		MOV r0, r8
+		MOV r7, #READ_FUNCTION
+		SWI #0
+		CMP r0, #END_OF_FILE
+		POPle {PC}
+		ADD r1, r1, #1 
+		B __inner_fileToString
 
 @-------------------------------------------------------------------
 _printString:
-@ Description: Print a message in the terminal.
+@ Description: Prints a message in the terminal.
 @ Receives:    The string address in r1.
 @ Returns:     Nothing.
 @-------------------------------------------------------------------
