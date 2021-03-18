@@ -1,7 +1,7 @@
 @-------------------------------------------------------------------
 @ File:           main.s
 @ Author:         Pedro Botelho
-@ Date:           13/06/2021
+@ Date:           18/04/2021
 @ Institution:    Federal University of Ceará
 @ Institution ID: 471047
 @
@@ -14,8 +14,10 @@
 
 .TEXT
 
-.ARM	
+.ARM
+	
 .INCLUDE "copycat.lib"
+
 .GLOBAL main
 
 main:
@@ -72,6 +74,7 @@ main:
 	@EXIT SYSCALL
 	MOV r7, #EXIT_FUNCTION
 	SWI #0
+	
 	
 .BALIGN 4
 .DATA

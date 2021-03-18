@@ -1,7 +1,7 @@
 @-------------------------------------------------------------------
 @ File:           copycat.lib
 @ Author:         Pedro Botelho
-@ Date:           13/06/2021
+@ Date:           18/04/2021
 @ Institution:    Federal University of Ceará
 @ Institution ID: 471047
 @
@@ -63,10 +63,19 @@
 
 @-------------------------------------------------------------------
 .GLOBAL _fileToString
-@ Description: Copies data from a file to memory
-@ Receives:    The string address, where the data will be placed, and
-@              the input file descriptor, in r0.
+@ Description: Copies data from a file to memory.
+@ Receives:    The string address, where the data will be placed, in 
+@              r1, and the input file descriptor, in r8.
 @ Returns:     The data in the requested string, in memory.
+@-------------------------------------------------------------------
+
+
+@-------------------------------------------------------------------
+.GLOBAL _stringToFile
+@ Description: Copies data from memory to file.
+@ Receives:    The string address, where the data is, in r1, and the 
+@              output file descriptor, in r9.
+@ Returns:     The data in the requested file.
 @-------------------------------------------------------------------
 
 

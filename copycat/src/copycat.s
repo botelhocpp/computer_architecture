@@ -1,7 +1,7 @@
 @-------------------------------------------------------------------
 @ File:           copycat.s
 @ Author:         Pedro Botelho
-@ Date:           13/06/2021
+@ Date:           18/04/2021
 @ Institution:    Federal University of Ceará
 @ Institution ID: 471047
 @
@@ -16,6 +16,7 @@
 .TEXT
 
 .ARM
+
 .INCLUDE "copycat.lib"
 
 
@@ -35,7 +36,7 @@ _end:
 
 @-------------------------------------------------------------------
 _getInput:
-@ Description: Get user's input from keyboard.
+@ Description: Get user input from keyboard.
 @ Receives:    Memory address where the string must be placed.
 @ Returns:     The string in the desired address.
 @-------------------------------------------------------------------
@@ -58,7 +59,7 @@ _getInput:
 
 @-------------------------------------------------------------------
 _openFile:
-@ Description: Opens the desired file.
+@ Description: Open the desired file.
 @ Receives:    The file path/name in r0, flags in r1, and permissions
 @              in r2. Also the address where the FD will me saved in
 @              r5. Some explanations:
@@ -116,9 +117,10 @@ _copyFile:
 		SWI #0	
 		B _readFile
 
+
 @-------------------------------------------------------------------
 _fileToString:
-@ Description: Copies data from a file to memory
+@ Description: Copies data from a file to memory.
 @ Receives:    The string address, where the data will be placed, in 
 @              r1, and the input file descriptor, in r8.
 @ Returns:     The data in the requested string, in memory.
@@ -134,9 +136,30 @@ _fileToString:
 		ADD r1, r1, #1 
 		B __inner_fileToString
 
+
+@-------------------------------------------------------------------
+_stringToFile:
+@ Description: Copies data from memory to file.
+@ Receives:    The string address, where the data is, in r1, and the 
+@              output file descriptor, in r9.
+@ Returns:     The data in the requested file.
+@-------------------------------------------------------------------
+	PUSH {LR}
+	MOV r2, #OPERATE_ONE_BYTE
+	__inner_stringToFile:
+		MOV r0, r9
+		MOV r7, #WRITE_FUNCTION
+		SWI #0
+		LDR r3, [r1]
+		CMP r3, #END_OF_FILE
+		POPle {PC}
+		ADD r1, r1, #1 
+		B __inner_stringToFile
+
+
 @-------------------------------------------------------------------
 _printString:
-@ Description: Prints a message in the terminal.
+@ Description: Print a message in the terminal.
 @ Receives:    The string address in r1.
 @ Returns:     Nothing.
 @-------------------------------------------------------------------
@@ -163,7 +186,9 @@ _fileError:
 	BL _printString
 	B _end
 
+
 .DATA
+
 .BALIGN 4
 
 @System Strings
