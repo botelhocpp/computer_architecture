@@ -1,0 +1,121 @@
+@-------------------------------------------------------------------
+@ File:           copycat.lib
+@ Author:         Pedro Botelho
+@ Date:           18/04/2021
+@ Institution:    Federal University of Ceará
+@ Institution ID: 471047
+@
+@ Description:    Copies data from one file to another. The input file
+@                 must exist. The output file can be inexistent.
+@ Implementation: Developed in ARM 32-bit Assembly.
+@ Compiling:      make all
+@ License:        GNU General Public License v3.0
+@-------------------------------------------------------------------
+
+
+.IFNDEF COPYCAT_LIB
+.EQU    COPYCAT_LIB, 0
+
+
+@-------------------------------------------------------------------
+.GLOBAL _getInput 
+@ Description: Get user input from keyboard.
+@ Receives:    Memory address where the string must be placed.
+@ Returns:     The string in the desired address.
+@-------------------------------------------------------------------
+
+
+@-------------------------------------------------------------------
+.GLOBAL _openFile
+@ Description: Open the desired file.
+@ Receives:    The file path/name in r0, flags in r1, and permissions
+@              in r2. Also the address where the FD will me saved in
+@              r5. Some explanations:
+@	       -> Flags: states how the file will be handled. For an
+@                        example: 0x40 create the file if it doesn't
+@                        exist, and 0x1 define the write-only access
+@                        mode. Hence, 0x40|0x1=0x41 represent both.  
+@	       -> Permissions: formally called 'mode' states who can 
+@                              access and what can be done with it.
+@                              For example, 0x1FF gives all user 
+@                              read, write and execution permissions.
+@ Returns:     The file descriptor, FD, in r0. In case of some error
+@              r0 will receive a number bellow or equal to zero, show
+@              an error message and exit.
+@-------------------------------------------------------------------
+
+
+@-------------------------------------------------------------------
+.GLOBAL _closeFile 
+@ Description: Closes the required file.
+@ Receives:    The file descriptor in r0.
+@ Returns:     Nothing.
+@-------------------------------------------------------------------
+
+
+@-------------------------------------------------------------------
+.GLOBAL _copyFile 
+@ Description: Copies data from an input file to an output file.
+@ Receives:    The input FD in r8 and the output FD in r9.
+@ Returns:     Nothing.
+@-------------------------------------------------------------------
+
+
+@-------------------------------------------------------------------
+.GLOBAL _fileToString
+@ Description: Copies data from a file to memory.
+@ Receives:    The string address, where the data will be placed, in 
+@              r1, and the input file descriptor, in r8.
+@ Returns:     The data in the requested string, in memory.
+@-------------------------------------------------------------------
+
+
+@-------------------------------------------------------------------
+.GLOBAL _stringToFile
+@ Description: Copies data from memory to file.
+@ Receives:    The string address, where the data is, in r1, and the 
+@              output file descriptor, in r9.
+@ Returns:     The data in the requested file.
+@-------------------------------------------------------------------
+
+
+@-------------------------------------------------------------------
+.GLOBAL _printString 
+@ Description: Print a message in the terminal.
+@ Receives:    The string address in r1.
+@ Returns:     Nothing.
+@-------------------------------------------------------------------
+
+
+@-------------------------------------------------------------------
+.GLOBAL _fileError 
+@ Description: Prints an error message and exits.
+@ Receives:    Nothing.
+@ Returns:     Nothing.
+@-------------------------------------------------------------------
+
+
+@Constants
+.EQU EXIT_FUNCTION,    0x0001
+.EQU READ_FUNCTION,    0x0003
+.EQU WRITE_FUNCTION,   0x0004
+.EQU OPEN_FUNCTION,    0x0005
+.EQU CLOSE_FUNCTION,   0x0006
+
+.EQU READ_ONLY,        0x0000
+.EQU DONT_CREATE,      0x0000 
+.EQU CREATE_WRITE,     0x0241
+.EQU PERMISSIONS,      0x01FF
+
+.EQU STD_OUT,          0x0001
+.EQU STD_IN,           0x0001
+.EQU OPERATE_ONE_BYTE, 0x0001
+
+.EQU ERROR,            0x0000
+.EQU END_OF_FILE,      0x0000
+.EQU END_OF_STRING,    0x0000
+
+.EQU LINE_FEED,        0x000A
+.EQU SPACE,            0x0020
+
+.ENDIF
