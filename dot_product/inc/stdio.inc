@@ -1,0 +1,7 @@
+%IFNDEF STDIO_H
+%DEFINE STDIO_H
+
+EXTERN scanf
+EXTERN printf
+
+%ENDIF
