@@ -2,7 +2,7 @@
 ; Author: 	Pedro Botelho
 ; Description:	Provices a function to calculate the sine function: a function
 ;             	that performs the expansion of the sine function in a Taylor series.
-;		(in AVX2).
+;    		(in AVX2).
 ; Date: 	02/JAN/2023
 
 [BITS 64]

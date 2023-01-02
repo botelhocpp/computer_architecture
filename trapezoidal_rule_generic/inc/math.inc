@@ -1,8 +1,8 @@
 ; ==============================================================================
-; File: 	     math.inc
-; Author:      Pedro Botelho
-; Description: Defines functions that perform various mathematical operations.
-; Date:        02/JAN/2023
+; File: 	math.inc
+; Author:     	Pedro Botelho
+; Description:	Defines functions that perform various mathematical operations.
+; Date:       	02/JAN/2023
 ; ==============================================================================
 
 %IFNDEF MATH_INC

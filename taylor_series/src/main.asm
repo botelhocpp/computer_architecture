@@ -8,10 +8,8 @@
 
 [BITS 64]
 
+%INCLUDE "stdio.inc"
 %INCLUDE "taylorseries.inc"
-
-EXTERN scanf
-EXTERN printf
 
 %DEFINE X_VALUE          [RBP - 16]  ; float
 %DEFINE TERMS_NUMBER     [RBP - 12]  ; int
