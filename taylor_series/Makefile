@@ -1,14 +1,18 @@
-all: main taylorseries math
-	@gcc -no-pie -m64 build/main.o build/taylorseries.o build/math.o -o bin/taylorseries
+PROG := bin/taylorseries
+AS := nasm
+AFLAGS := -f elf64 -g -Iinc
+LD := gcc
+LFLAGS := -m64 -no-pie
 
-main:
-	@nasm -Iinc -f elf64 src/main.asm -o build/main.o
+.PHONY: clean
 
-taylorseries:
-	@nasm -Iinc -f elf64 src/taylorseries.asm -o build/taylorseries.o
+all: ${PROG}
 
-math:
-	@nasm -Iinc -f elf64 src/math.asm -o build/math.o
+${PROG}: build/main.o build/math.o build/taylorseries.o
+	@${LD} ${LFLAGS} $^ -o $@
 
-clean:
-	@rm bin/* build/*
+build/%.o: src/%.asm
+	@${AS} ${AFLAGS} $< -o $@
+
+clean: 
+	@rm -rf bin/* build/*
